@@ -1,0 +1,39 @@
+
+# rtx3080ti in lab-pc(cuda11.7)
+#numpy==1.23.1
+#torch==2.0.0 
+#torchvision==0.15.1 
+#torchaudio==2.0.1
+#opencv-python
+#onnx
+#onnxruntime-gpu==1.17
+#mxnet-cu117
+#scikit-image
+#insightface==0.2.1
+#requests==2.25.1
+#kornia==0.5.4
+#dill
+#wandb
+
+# rtxa6000 in lab-server(cuda12.1)
+numpy==1.23.1
+torch==2.1.1 --index-url https://download.pytorch.org/whl/cu121
+torchvision==0.16.1 --index-url https://download.pytorch.org/whl/cu121
+torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu121
+
+# common
+opencv-python
+onnx
+onnxruntime-gpu==1.17
+mxnet-cu117
+scikit-image
+insightface==0.2.1
+requests==2.25.1
+kornia==0.5.4
+dill
+wandb
+wheel
+
+# add
+ipykernel
+jupyter

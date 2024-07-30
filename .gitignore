@@ -1,0 +1,47 @@
+*/__pycache__/*
+*/__pycache__/
+.ipynb_checkpoints
+__pycache__
+weights
+arcface_model
+
+# ArcFace model
+/arcface_model/backbone.pth
+/arcface_model/iresnet.py
+
+# Landmarks detector
+/insightface_func/models/antelope/glintr100.onnx
+/insightface_func/models/antelope/scrfd_10g_bnkps.onnx
+
+# G and D models with 1, 2, 3 blocks
+/weights/G_unet_2blocks.pth
+/weights/D_unet_2blocks.pth
+/weights/G_unet_1block.pth
+/weights/D_unet_1block.pth
+/weights/G_unet_3blocks.pth
+/weights/D_unet_3blocks.pth
+
+# Model for eyes loss
+/AdaptiveWingLoss/AWL_detector/WFLW_4HG.pth
+AdaptiveWingLoss
+
+# Super res model
+/weights/10_net_G.pth
+
+# dataset
+dataset/*
+!dataset/.gitkeep
+
+# saved_weights
+saved_weights
+saved_models
+current_models
+saved_models_base
+current_models_base
+
+# log
+wandb
+
+# Environments
+.venv
+.git

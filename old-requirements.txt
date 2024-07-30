@@ -1,0 +1,34 @@
+
+# numpy==1.19.5
+numpy==1.23.1
+#-f https://download.pytorch.org/whl/torch_stable.html
+#torch==1.6.0+cu101
+#torch==2.0.1+cu117
+#-f https://download.pytorch.org/whl/torch_stable.html
+#torchvision==0.7.0+cu101
+#torchvision>=0.2.0.1
+#torchvision==0.17.2
+#torch==2.2.2
+#torchvision==0.17.2
+
+torch==2.0.0 
+torchvision==0.15.1 
+torchaudio==2.0.1
+opencv-python
+#onnx==1.9.0
+onnx
+#onnxruntime-gpu==1.4.0
+onnxruntime-gpu==1.17
+#mxnet-cu101mkl
+mxnet-cu117
+# まだリリースされてないmxnet-cu118
+scikit-image
+insightface==0.2.1
+requests==2.25.1
+kornia==0.5.4
+dill
+wandb
+
+# add
+ipykernel
+jupyter
