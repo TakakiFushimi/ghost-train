@@ -436,8 +436,8 @@ if __name__ == "__main__":
         os.mkdir('./images')
     
     # モデルの最新の重みを保存するためのフォルダを作成
-    if not os.path.exists(f'./saved_models/{args.run_name}'):
-        os.mkdir(f'./saved_models/{args.run_name}')
-        os.mkdir(f'./current_models/{args.run_name}')
+    if not os.path.exists(f'./saved_weights/saved_models/{args.run_name}'):
+        os.mkdir(f'./saved_weights/saved_models/{args.run_name}')
+        os.mkdir(f'./saved_weights/current_models/{args.run_name}')
     
     main(args)
