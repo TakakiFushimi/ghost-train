@@ -177,11 +177,11 @@ def train_one_epoch(G: AEI_Net,
         
         # モデルの状態を保存
         if iteration % 5000 == 0:
-            torch.save(G.state_dict(), f'./saved_models/{args.run_name}/G_latest.pth')
-            torch.save(D.state_dict(), f'./saved_models/{args.run_name}/D_latest.pth')
+            torch.save(G.state_dict(), f'./saved_weights/saved_models/{args.run_name}/G_latest.pth')
+            torch.save(D.state_dict(), f'./saved_weights/saved_models/{args.run_name}/D_latest.pth')
 
-            torch.save(G.state_dict(), f'./current_models/{args.run_name}/G_' + str(epoch)+ '_' + f"{iteration:06}" + '.pth')
-            torch.save(D.state_dict(), f'./current_models/{args.run_name}/D_' + str(epoch)+ '_' + f"{iteration:06}" + '.pth')
+            torch.save(G.state_dict(), f'./saved_weights/current_models/{args.run_name}/G_' + str(epoch)+ '_' + f"{iteration:06}" + '.pth')
+            torch.save(D.state_dict(), f'./saved_weights/current_models/{args.run_name}/D_' + str(epoch)+ '_' + f"{iteration:06}" + '.pth')
 
         # 特定のステップでフェイススワップの結果を表示
         if (iteration % 250 == 0) and (args.use_wandb):
