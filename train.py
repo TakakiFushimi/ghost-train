@@ -127,7 +127,7 @@ def train_one_epoch(G: AEI_Net,
         else:
             disparity = None
         # ジェネレータの損失を計算
-        lossG, loss_adv_accumulated, L_adv, L_attr, L_id, L_rec, L_l2_eyes = compute_generator_losses(G, Y, Xt, Xt_attr, Di,
+        lossG, loss_adv_accumulated, L_adv, L_attr, L_id, L_rec, L_l2_eyes, L_shape = compute_generator_losses(G, Y, Xt, Xt_attr, Di,
                                                                              embed, ZY, eye_heatmaps,loss_adv_accumulated, 
                                                                              diff_person, same_person, args, disparity)
         
@@ -174,6 +174,9 @@ def train_one_epoch(G: AEI_Net,
             if args.eye_detector_loss:
                 print(f'L_l2_eyes: {L_l2_eyes.item()}')
             print(f'loss_adv_accumulated: {loss_adv_accumulated}')
+            if args.shape_detector_loss:
+                print(f'L_shape: {L_shape.item()}')
+            print(f'loss_adv_accumulated: {loss_adv_accumulated}')
             if args.scheduler:
                 print(f'scheduler_G lr: {scheduler_G.get_last_lr()} scheduler_D lr: {scheduler_D.get_last_lr()}')
         
@@ -181,6 +184,8 @@ def train_one_epoch(G: AEI_Net,
         if args.use_wandb:
             if args.eye_detector_loss:
                 wandb.log({"loss_eyes": L_l2_eyes.item()}, commit=False)
+            if args.shape_detector_loss:
+                wandb.log({"loss_shape": L_shape.item()}, commit=False)
             wandb.log({"loss_id": L_id.item(),
                        "lossD": lossD.item(),
                        "lossG": lossG.item(),
@@ -422,9 +427,15 @@ if __name__ == "__main__":
     if args.vgg == False and args.same_identity == True:
         raise ValueError("Sorry, you can't use some other dataset than VGG2 Faces with param same_identity=True")
     # vggがFalseでsame_identityがTrueの場合、VGG2 Faces以外のデータセットを使用することはできません
-    
     if args.use_wandb == True:
-        wandb.init(project=args.wandb_project, entity=args.wandb_entity, name=args.name, id=args.run_id, resume=args.use_resume, settings=wandb.Settings(start_method='fork'))
+        if args.use_resume == 'None' or args.use_resume == False:
+            # 新しいランを作成する場合
+            wandb.init(project=args.wandb_project, entity=args.wandb_entity, name=args.name, settings=wandb.Settings(start_method='fork'))
+        else:
+            # ランを再開する場合
+            wandb.init(project=args.wandb_project, entity=args.wandb_entity, name=args.name, id=args.run_id, resume=args.use_resume, settings=wandb.Settings(start_method='fork'))
+
+        # wandb設定の更新
         wandb.config.update({"weight_id":args.weight_id, "weight_eye":args.weight_eyes, "dataset_path": args.dataset_path, "pretrained": args.pretrained, "G_path": args.G_path,"D_path": args.D_path}, allow_val_change=True)
 
         config = wandb.config
