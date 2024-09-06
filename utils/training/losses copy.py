@@ -12,7 +12,7 @@ def hinge_loss(X, positive=True):
     
     
 def compute_generator_losses(G, Y, Xt, Xt_attr, Di, embed, ZY, eye_heatmaps, loss_adv_accumulated, 
-                             diff_person, same_person, args, disparity):
+                             diff_person, same_person, args):
     # adversarial loss
     L_adv = 0.
     for di in Di:
@@ -44,18 +44,12 @@ def compute_generator_losses(G, Y, Xt, Xt_attr, Di, embed, ZY, eye_heatmaps, los
         L_l2_eyes = 0
     
     # shape loss
-    if args.shape_detector_loss:
-        # shape_deca.py からの Procrustes ロスを計算
-        L_shape = disparity
-    else:
-        L_shape = 0
-
-
+        
     # final loss of generator
-    lossG = args.weight_adv*L_adv + args.weight_attr*L_attr + args.weight_id*L_id + args.weight_rec*L_rec + args.weight_eyes*L_l2_eyes + args.weight_shape * L_shape
+    lossG = args.weight_adv*L_adv + args.weight_attr*L_attr + args.weight_id*L_id + args.weight_rec*L_rec + args.weight_eyes*L_l2_eyes
     loss_adv_accumulated = loss_adv_accumulated*0.98 + L_adv.item()*0.02
     
-    return lossG, loss_adv_accumulated, L_adv, L_attr, L_id, L_rec, L_l2_eyes, L_shape
+    return lossG, loss_adv_accumulated, L_adv, L_attr, L_id, L_rec, L_l2_eyes
 
 
 def compute_discriminator_loss(D, Y, Xs, diff_person):

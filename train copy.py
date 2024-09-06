@@ -16,7 +16,6 @@ import torch
 import torchvision.transforms as transforms
 import torch.optim.lr_scheduler as scheduler
 
-
 # custom imports
 sys.path.append('./apex/')
 
@@ -29,7 +28,6 @@ from utils.training.losses import hinge_loss, compute_discriminator_loss, comput
 from utils.training.detector import detect_landmarks, paint_eyes
 from AdaptiveWingLoss.core import models
 from arcface_model.iresnet import iresnet100
-from DECA.demos.shape_deca import initialize_deca, get_mesh_data, compute_procrustes_loss
 
 print("finished imports")
 
@@ -114,22 +112,11 @@ def train_one_epoch(G: AEI_Net,
             eye_heatmaps = [Xt_heatmap_left, Xt_heatmap_right, Y_heatmap_left, Y_heatmap_right]
         else:
             eye_heatmaps = None
-        
-        if args.shape_detector_loss:
-            # DECAモデルを初期化
-            deca = initialize_deca(device)
-            # Source 画像と生成された画像のメッシュデータを取得
-            source_obj_data = get_mesh_data(deca, Xs)
-            generated_obj_data = get_mesh_data(deca, Y)
-
-            # Procrustes ロスを計算
-            disparity = compute_procrustes_loss(source_obj_data, generated_obj_data)
-        else:
-            disparity = None
+            
         # ジェネレータの損失を計算
         lossG, loss_adv_accumulated, L_adv, L_attr, L_id, L_rec, L_l2_eyes = compute_generator_losses(G, Y, Xt, Xt_attr, Di,
                                                                              embed, ZY, eye_heatmaps,loss_adv_accumulated, 
-                                                                             diff_person, same_person, args, disparity)
+                                                                             diff_person, same_person, args)
         
         # 損失をスケールしてバックプロパゲーション
         with amp.scale_loss(lossG, opt_G) as scaled_loss:
@@ -348,9 +335,6 @@ if __name__ == "__main__":
     # 再構成損失の重み
     parser.add_argument('--weight_eyes', default=0., type=float, help='Eyes Loss weight')
     # 目の損失の重み
-    parser.add_argument('--weight_loss', default=0., type=float, help='Shape Loss weight')
-    # 顔形状の重み
-
 
     # training params you may want to change
     # 変更する可能性があるトレーニングパラメータ
@@ -376,8 +360,6 @@ if __name__ == "__main__":
     # 学習率をどれだけ減少させるかを示す値
     parser.add_argument('--eye_detector_loss', default=False, type=bool, help='If True eye loss with using AdaptiveWingLoss detector is applied to generator')
     # Trueの場合、AdaptiveWingLoss検出器を使用してジェネレータに目の損失を適用する
-    parser.add_argument('--shape_detector_loss', default=False, type=bool, help='If True shape loss with using DECA detector is applied to generator')
-    # Trueの場合、DECAを使用してジェネレーターに顔形状の損失を適用する
 
     # info about this run
     # この実行に関する情報

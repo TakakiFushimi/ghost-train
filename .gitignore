@@ -24,6 +24,9 @@ arcface_model
 # Model for eyes loss
 /AdaptiveWingLoss/AWL_detector/WFLW_4HG.pth
 
+#shape loss
+*DECA
+*pytorch3d
 
 # Super res model
 /weights/10_net_G.pth
@@ -44,4 +47,5 @@ wandb
 
 # Environments
 .venv
+.venv2
 .git
