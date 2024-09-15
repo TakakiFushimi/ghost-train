@@ -1,9 +1,10 @@
 
 # rtx3080ti in lab-pc(cuda11.7)
-#numpy==1.23.1
-#torch==2.0.0 
-#torchvision==0.15.1 
-#torchaudio==2.0.1
+numpy==1.23.1
+torch==2.0.0 
+torchvision==0.15.1 
+torchaudio==2.0.1
+
 #opencv-python
 #onnx
 #onnxruntime-gpu==1.17
@@ -16,10 +17,10 @@
 #wandb
 
 # rtxa6000 in lab-server(cuda12.1)
-numpy==1.23.1
-torch==2.1.1 --index-url https://download.pytorch.org/whl/cu121
-torchvision==0.16.1 --index-url https://download.pytorch.org/whl/cu121
-torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu121
+#numpy==1.23.1
+#torch==2.1.1 --index-url https://download.pytorch.org/whl/cu121
+#torchvision==0.16.1 --index-url https://download.pytorch.org/whl/cu121
+#torchaudio==2.1.1 --index-url https://download.pytorch.org/whl/cu121
 
 # common
 opencv-python

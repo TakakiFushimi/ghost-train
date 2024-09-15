@@ -24,6 +24,9 @@ arcface_model
 # Model for eyes loss
 /AdaptiveWingLoss/AWL_detector/WFLW_4HG.pth
 
+# generated images
+examples/quantitative-evaluation/*
+examples/results/*
 
 # Super res model
 /weights/10_net_G.pth
