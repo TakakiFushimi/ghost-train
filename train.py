@@ -118,9 +118,15 @@ def train_one_epoch(G: AEI_Net,
         if args.shape_detector_loss:
             # DECAモデルを初期化
             deca = initialize_deca(device)
+            # リサイズ用の変換を定義
+            resize_transform = transforms.Resize((224, 224))
+
+            # 画像をリサイズ (テンソルの場合)
+            Xs_resized = resize_transform(Xs)
+            Y_resized = resize_transform(Y)
             # Source 画像と生成された画像のメッシュデータを取得
-            source_obj_data = get_mesh_data(deca, Xs)
-            generated_obj_data = get_mesh_data(deca, Y)
+            source_obj_data = get_mesh_data(deca, Xs_resized)
+            generated_obj_data = get_mesh_data(deca, Y_resized)
 
             # Procrustes ロスを計算
             disparity = compute_procrustes_loss(source_obj_data, generated_obj_data)
@@ -353,7 +359,7 @@ if __name__ == "__main__":
     # 再構成損失の重み
     parser.add_argument('--weight_eyes', default=0., type=float, help='Eyes Loss weight')
     # 目の損失の重み
-    parser.add_argument('--weight_loss', default=0., type=float, help='Shape Loss weight')
+    parser.add_argument('--weight_shape', default=0., type=float, help='Shape Loss weight')
     # 顔形状の重み
 
 
