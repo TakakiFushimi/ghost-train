@@ -92,13 +92,24 @@ We also provide the training code for face swap model as follows:
   python train.py --run_name {YOUR_RUN_NAME}
   ```
 We provide a lot of different options for the training. More info about each option you can find in `train.py` file. If you would like to use wandb logging of the experiments, you should login to wandb first  `--wandb login`.
-  
+
+## Training with Shapeloss
+shapelossブランチに切り替えてください。
+train.pyの実行
+
+
+### shape lossの定量評価の仕方
+1. mainブランチにあるgenerate-save.ipynbでswap画像を生成
+2. DECAリポジトリのcrop.pyで顔を検出・くり抜き
+3. DECAリポジトリのcompute_loss.pyでプロクラスタ分析の平均値を取得
+
+
 ### Tips
   1. For the first epochs we suggest not to use eye detection loss and scheduler if you train from scratch.
   2. In case of finetuning you can variate losses coefficients to make the output look similar to the source identity, or vice versa, to save features and attributes of target face.
   3. You can change the backbone of the attribute encoder and num_blocks of AAD ResBlk using parameters `--backbone` and `--num_blocks`.
   4. During the finetuning stage you can use our pretrain weights for generator and discriminator that are located in `weights` folder. We provide the weights for models with U-Net backbone and 1-3 blocks in AAD ResBlk. The main model architecture contains 2 blocks in AAD ResBlk.
-  
+
 ## Cite
 If you use our model in your research, we would appreciate using the following citation
 
